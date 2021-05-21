@@ -18,26 +18,26 @@ asmlinkage long sys_set_weight(int weight){
 asmlinkage long sys_get_weight(void){
     return current->_weight;
 }
-int get_children_sum_wrap(struct task_struct& task){
+//int get_children_sum_wrap(task_struct *task);
+int get_children_sum_wrap(struct task_struct *task){
     struct list_head *list;
     struct task_struct *itt_task;        
     int sum= task->_weight;
     list_for_each(list,&task->children){
         itt_task = list_entry(list,struct task_struct,sibling);
-        sum+= get_children_sum_wrap(*itt_task);
+        sum+= get_children_sum_wrap(itt_task);
     }
     return sum;
     
 }
 asmlinkage int sys_get_children_sum(void){
-    int res = get_children_sum_wrap(current);
     struct list_head *list;
     struct task_struct *itt_task;        
     int sum=0;
     int i=0;
-    list_for_each(list,&task->children){
+    list_for_each(list,&current->children){
         itt_task = list_entry(list,struct task_struct,sibling);
-        sum+= get_children_sum_wrap(*itt_task)
+        sum+= get_children_sum_wrap(itt_task);
         i++;
     }
     if (i==0){
