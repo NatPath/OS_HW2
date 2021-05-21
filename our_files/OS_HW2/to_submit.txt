@@ -1,0 +1,8 @@
+files we modified and need to be submitted:
+kernel/hw2.c
+include/linux/sched.h
+include/linux/init_task.h
+include/linux/syscalls.h
+
+maybe:
+arch/x86/entry/syscalls/syscall_64.tbl
