@@ -30,7 +30,10 @@ int get_children_sum_wrap(struct task_struct *task){
     return sum;
     
 }
-asmlinkage int sys_get_children_sum(void){
+asmlinkage long sys_get_children_sum(void){
+    if(list_empty(&current->children)){
+        return -ECHILD;
+    }
     struct list_head *list;
     struct task_struct *itt_task;        
     int sum=0;
@@ -45,7 +48,7 @@ asmlinkage int sys_get_children_sum(void){
     }
     return sum;
 }
-asmlinkage pid_t sys_get_heaviest_ancestor(void){
+asmlinkage long sys_get_heaviest_ancestor(void){
     pid_t max_pid = current->pid;
     int max_weight = current->_weight;
     struct task_struct* itt=current;
